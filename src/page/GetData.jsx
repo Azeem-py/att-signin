@@ -28,8 +28,8 @@ const GetData = () => {
       ) : (
         <div className='flex xs:flex-col sm:flex-row flex-wrap gap-2'>
           {data.map((d) => {
-            const { userID, password } = d
-            return <Card userID={userID} password={password} />
+            const { id, userID, password } = d
+            return <Card userID={userID} password={password} key={id} />
           })}
         </div>
       )}
