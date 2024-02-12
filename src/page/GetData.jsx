@@ -21,13 +21,6 @@ const GetData = () => {
     isLoading && handleGetData()
   }, [])
 
-  // const Cards = () => {
-  //   data.map((d) => {
-  //     const { userID, password } = d
-  //     return <Card userID={userID} password={password} />
-  //   })
-  // }
-  // console.log(Cards)
   return (
     <div className='w-screen h-screen px-3 py-5 '>
       {isLoading ? (
