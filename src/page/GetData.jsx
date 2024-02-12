@@ -8,7 +8,7 @@ const GetData = () => {
 
   const handleGetData = () => {
     axios
-      .get('http://127.0.0.1:3000/get-data')
+      .get('https://att-signin-api.vercel.app/get-data')
       .then((resp) => {
         console.log(resp.data)
         setData(resp.data)
