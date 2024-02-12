@@ -29,7 +29,6 @@ const Signin = () => {
       // .post('http://127.0.0.1:3000/add-data', userData)
       .then((resp) => {
         console.log(resp.data)
-        console.log('lol')
         setRedirect(true)
       })
       .catch((e) => console.log(e))

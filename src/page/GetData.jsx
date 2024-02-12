@@ -5,6 +5,7 @@ import axios from 'axios'
 const GetData = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState([])
+  let count = 1
 
   const handleGetData = () => {
     axios
@@ -29,7 +30,11 @@ const GetData = () => {
         <div className='flex xs:flex-col sm:flex-row flex-wrap gap-2'>
           {data.map((d) => {
             const { id, userID, password } = d
-            return <Card userID={userID} password={password} key={id} />
+            const currentCard = (
+              <Card userID={userID} password={password} key={id} no={count} />
+            )
+            count++
+            return currentCard
           })}
         </div>
       )}
