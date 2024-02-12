@@ -1,7 +1,6 @@
 import Signin from './page/Signin'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import GetData from './page/getData'
-
+import GetData from './page/GetData'
 function App() {
   return (
     <>
