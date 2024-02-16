@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import axios from 'axios'
+import { baseURL } from '../helpers/data'
 
 const GetData = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -9,8 +10,7 @@ const GetData = () => {
 
   const handleGetData = () => {
     axios
-      .get('https://att-signin-api-express.vercel.app/get-data')
-      // .get('http://127.0.0.1:3000/get-data')
+      .get(`${baseURL}get-data`)
       .then((resp) => {
         console.log(resp.data)
         setData(resp.data)
