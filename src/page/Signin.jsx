@@ -68,7 +68,7 @@ const Signin = () => {
       })
       .then((resp) => {
         console.log(resp.data)
-        // setRedirect(true)
+        setRedirect(true)
       })
       .catch((e) => console.log(e))
   }
